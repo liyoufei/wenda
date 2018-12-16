@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sss.dao.QuestionMapper">
+  <resultMap id="BaseResultMap" type="com.sss.model.Question">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sss.model.Question">
+    insert into question (id, title, user_id, 
+      created_date, comment_count, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{createdDate,jdbcType=TIMESTAMP}, #{commentCount,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sss.model.Question">
+    update question
+    set title = #{title,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      created_date = #{createdDate,jdbcType=TIMESTAMP},
+      comment_count = #{commentCount,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, user_id, created_date, comment_count, content
+    from question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, user_id, created_date, comment_count, content
+    from question
+  </select>
+  <select id="selectLatestQuestion" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, user_id, created_date, comment_count, content
+    from question
+
+    where user_id = #{userId,jdbcType=INTEGER}
+
+    order by id desc
+    limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateCommentCount">
+    update question
+    set comment_count = #{count}
+    where id = #{qid}
+  </update>
+</mapper>

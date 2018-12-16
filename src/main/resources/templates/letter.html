@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN" dropeffect="none" class="js is-AppPromotionBarVisible cssanimations csstransforms csstransitions flexbox no-touchevents no-mobile" style="">
+<head th:replace="~{header :: head}"></head>
+<body>
+<div th:replace="~{header :: common-navigation}"></div>
+<link rel="stylesheet" href="../styles/letter.css">
+    <div id="main">
+        <div  class="zg-wrap zu-main clearfix ">
+
+            <ul th:each="vo : ${vos}" class="letter-list">
+
+                <li id="conversation-item-10001_622873">
+                <a class="letter-link" th:href="@{'~/msg/detail?conversationId='+${vo.get('message').getConversationId()}}">
+                </a>
+                <div class="letter-info">
+                <span class="l-time" th:text="${vo.get('message').getCreatedDate()}"></span>
+                <div class="l-operate-bar">
+                <a th:href="@{'~/msg/detail?conversationId='+${vo.get('message').getConversationId()}}">
+                </a>
+                </div>
+                </div>
+                <div class="chat-headbox">
+                <span class="msg-num" th:text="${vo.get('unread')}">
+                </span>
+                <a class="list-head">
+                <img alt="头像" th:src="${vo.get('user').getHeadUrl()}"/>
+                </a>
+                </div>
+                <div class="letter-detail">
+                <a th:title="${vo.get('user').getName()}" class="letter-name level-color-1">
+                </a>
+                <p class="letter-brief">
+                <a th:href="@{'~/msg/detail?conversationId='+${vo.get('message').getConversationId()}}" th:text="${vo.get('message').getContent()}">
+                </a>
+                </p>
+                </div>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</body>
+</html>

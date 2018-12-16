@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sss.dao.FeedMapper">
+  <resultMap id="BaseResultMap" type="com.sss.model.Feed">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="created_date" jdbcType="TIMESTAMP" property="createdDate" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="data" jdbcType="VARCHAR" property="data" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from feed
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sss.model.Feed">
+    insert into feed (id, created_date, user_id, 
+      data, type)
+    values (#{id,jdbcType=INTEGER}, #{createdDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
+      #{data,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.sss.model.Feed">
+    update feed
+    set created_date = #{createdDate,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      data = #{data,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, created_date, user_id, data, type
+    from feed
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, created_date, user_id, data, type
+    from feed
+  </select>
+</mapper>
